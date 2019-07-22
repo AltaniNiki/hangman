@@ -1,0 +1,31 @@
+.lettersContainer{
+    margin-top:10px;
+    /* border:1px solid black;   */
+}
+.letter{
+    /* box-shadow: 5px 10px; */
+    max-width:100px;
+    min-width:80px;
+    height:30px;
+    border: 1px solid #4169e1;
+    margin:1px 1px 1px 1px;
+    justify-content: center;
+    display:flex;
+    align-items: center;
+}
+.letter:hover{
+    color:white;
+    background-color: #4169e1;
+}
+
+.lettersDiv{
+    justify-content: center;
+    display:flex;
+    flex-direction:row;
+    flex-wrap: wrap; 
+    margin:10px 10px 10px 10px;
+}
+.wins{
+    display: flex;
+    flex-direction: row;
+}
