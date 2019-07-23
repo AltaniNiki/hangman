@@ -32,11 +32,11 @@ class App extends React.Component {
       //     console.log( document.getElementById(e.target.value).className);
       //     document.getElementById(e.target.value).className +=' selectedCategory';
       // }
-      console.log(e.target.value);
+     
      this.setState({category:e.target.value});
    }
       render(){
-        console.log(this.state.page);
+       
         return (
           <div className="App">
             {this.state.page==='menu' && 
@@ -46,8 +46,10 @@ class App extends React.Component {
               onChangePage ={(e)=>this.onChangePage(e)}
             />}
  
-            {this.state.page==='game' &&<Game
-             category="footballTeams"
+            {this.state.page==='game' &&
+            <Game
+             category={this.state.category}
+             wins={this.state.wins}
              />}
           </div>
         );

@@ -1,0 +1,10 @@
+.wordHold{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+.hold{
+    margin:0px 10px 0px 10px;
+    font-size: 40px;
+}
