@@ -32,9 +32,10 @@ const Game = (props) =>{
                 <div className="Letters">
                 <Letters
                 onClickLetter={props.onClickLetter}
+                onPressLetter ={props.onPressLetter}
                // onCheckLetter={props.onCheckLetter}
                />
-              { props.nextWord === 1 && <button onClick={props.checkNextWord}>Next Word</button>} 
+              { props.nextWord === 1 && <button onClick={props.checkNextWord}>Next Level</button>} 
 
                 </div>
                 </div>

@@ -24,26 +24,29 @@ class App extends React.Component {
           score:0,
           nextWord:0,
           showModal:false
-
       };
 
     }
-
+//allagh selidas
    onChangePage = (page) =>{
       this.setState({page:page})
       
     }
+// allagh katigorias    
     onClickCategory = (e)=>{
      this.setState({category:e.target.value});
    }
-
+// kata thn epilogh to grammatos
    onClickLetter = (e) =>{
   
     this.setState({letter:e.target.value});
     this.onCheckLetter(e.target.value);
    }
-
-   
+// resetPaixnidiou
+   resetStage= ()=>{
+     this.setState({wins:0,category:'',page:'menu',word:[],letter:'',errors:0,score:0,newWord:0,showModal:false});
+   }
+   //draw body
    onErrorAddBody=(error_no)=>{
     let c = document.getElementById("myCanvas");
     let ctx = c.getContext("2d");
@@ -93,17 +96,23 @@ class App extends React.Component {
         ctx.moveTo(90, 100);
         ctx.lineTo(70,150 );
         ctx.stroke();
+        
     }
 
 }
 
-
+//ypologismos le3hs
    onCalculateWord=()=>{
     var selectedWord;
+    var flag=0;
         if (this.state.category === 'footballTeams'){
           if (footballTeams.length !==0){
             selectedWord =footballTeams[Math.floor(Math.random() * footballTeams.length)];
             footballTeams = footballTeams.filter((value)=> value !==selectedWord );
+          }else{
+            flag=1;
+            alert('You won score ' +this.state.score);
+            this.resetStage();
           }
 
         }else if(this.state.category==='programming'){
@@ -111,32 +120,42 @@ class App extends React.Component {
             selectedWord = programming[Math.floor(Math.random() * programming.length)];
             programming = programming.filter((value)=> value !==selectedWord );
           
+          }else{
+            flag=1;
+            alert('You won score ' +this.state.score);
+            this.resetStage();
           }
           
         }else if(this.state.category==='videogames'){
           if (videoGames.length!== 0){
             selectedWord= videoGames[Math.floor(Math.random() * videoGames.length)];
             videoGames = videoGames.filter((value)=> value !== selectedWord );
+          }else{
+            flag=1;
+            alert('You won score ' +this.state.score);
+            this.resetStage();
           }
           
         }
-       
-      const selectedWordSplitted = selectedWord.split('');
-      var x = selectedWordSplitted.map((word)=>{
+       if (flag == 0){
+          const selectedWordSplitted = selectedWord.split('');
+          var x = selectedWordSplitted.map((word)=>{
       
           return{
             value:word,
             active:false
-          }
-      });
+             }
+          });
         this.setState({word:x});
+       }
+     
    }
 
 
    onCheckLetter=(letter)=>{
- 
+ // new word
     let newWord = this.state.word.map(l=> {
-      console.log(letter);
+     
       if (l.value === letter){
         return {...l,active:true};
       }else if (l.value !== letter){
@@ -155,16 +174,22 @@ class App extends React.Component {
     let score = this.state.score + (this.state.word.filter(w=> w.value === letter).length > 0 ? 10 : 0 );
    
     if (errors !== this.state.errors){
+      //draw 
       this.onErrorAddBody(errors);
-      if (errors === 6){
-        console.log('funShowModal');
-        this.funShowModal();
-      } 
        document.getElementById(letter).disabled = true;
        document.getElementById(letter).className += ' inactiveBtn';
     }
 
-    this.setState({...this.state,word:newWord/*,wins,*/, errors,score});
+    if(errors == 6){
+      //disable all button
+      var lettersDiv = document.getElementsByClassName('letter');
+       for (let i =0; i<lettersDiv.length; i++){
+        document.getElementById(lettersDiv[i].id).disabled = true;
+       }
+       //show modal
+    }
+
+    this.setState({...this.state,word:newWord,wins, errors,score});
 
     if (newWord.filter(w=> w.active ).length === newWord.length ){
       // prepei na tou di3w mnm oti kerdise
@@ -172,17 +197,20 @@ class App extends React.Component {
     }
    }
 
+
    checkNextWord=()=>{
     this.onCalculateWord();
     this.setState({nextWord:0})
+    var lettersDiv = document.getElementsByClassName('letter');
+    for (let i =0; i<lettersDiv.length; i++){
+     document.getElementById(lettersDiv[i].id).disabled = false;
+     document.getElementById(lettersDiv[i].id).className = 'letter';
 
+    }
    }
 
-   gameOver=()=>{
 
-   }
-
-  funShowModal = () => {
+ funShowModal = () => {
     console.log('open funShowModal');
     this.setState({ showModal: true });
   };
@@ -191,6 +219,9 @@ class App extends React.Component {
     this.setState({ showModal: false });
   };
 
+  onPressLetter = (e) => {
+console.log(e.tagret.value);
+  }
 
       render(){
        
@@ -213,6 +244,7 @@ class App extends React.Component {
              score = {this.state.score}
              nextWord = {this.state.nextWord}
              checkNextWord = {this.checkNextWord}
+             onPressLetter ={this.onPressLetter}
             
            //  onCheckLetter={this.onCheckLetter}
              />}

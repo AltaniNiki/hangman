@@ -8,7 +8,7 @@ const letters=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','
 const Letters = (props)=>{
     const letterDiv =   letters.map((letter)=>{
        
-          return (<button className="letter" key={letter} value={letter} onClick={props.onClickLetter} id={letter}> {/*props.onCheckLetter();*/}
+          return (<button className="letter" key={letter} value={letter} onClick={props.onClickLetter} onKeyPres={props.onPressLetter} id={letter}> {/*props.onCheckLetter();*/}
                     {letter}
                   </button>)
       });
