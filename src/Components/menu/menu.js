@@ -23,7 +23,7 @@ class Menu extends React.Component{
                         <button id="videogames" className={"btn_choice" + (this.props.category === 'videogames'? " selectedCategory":"")} value="videogames" onClick={this.props.onClickCategory}>Video Games</button>
                     </div>
                 <div className="actions">
-                    <button className="startGame" onClick={()=>this.props.onChangePage('game')}> Start Game</button>
+                    <button className="startGame" onClick={()=>{this.props.onChangePage('game'); this.props.onCalculateWord()}}> Start Game</button>
                 </div>
                 </div>
             </div>

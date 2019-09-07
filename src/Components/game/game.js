@@ -13,7 +13,11 @@ const Game = (props) =>{
 
         return(
             <div className="paper" id="instructions">
-                <div className="wins">Wins: <strong> {props.wins}</strong></div>
+                <div className="basicInfo">
+                    {/* div className="wins">Wins: <strong> {props.wins}</strong></div> */}
+                    <div className="score">Scrore: <strong>{props.score}</strong></div>
+                    <div className="category">Category: <strong>{props.category}</strong></div>
+                </div>
                 <div className="gameContainer">
                 
                 <div className="gallows">
@@ -22,10 +26,16 @@ const Game = (props) =>{
                 <div className="words" id="words">
                   <Word
                    category={props.category}
+                   words={props.word}
                   />
                 </div>
                 <div className="Letters">
-                <Letters/>
+                <Letters
+                onClickLetter={props.onClickLetter}
+               // onCheckLetter={props.onCheckLetter}
+               />
+              { props.nextWord === 1 && <button onClick={props.checkNextWord}>Next Word</button>} 
+
                 </div>
                 </div>
             </div>

@@ -3,3 +3,10 @@
   background-color:#4169e1;
 }
 
+.activeBtn{
+  background-color:green;
+}
+
+.inactiveBtn{
+  background-color:red;
+}
