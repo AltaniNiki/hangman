@@ -48,8 +48,8 @@ class App extends React.Component {
    }
    //draw body
    onErrorAddBody=(error_no)=>{
-    let c = document.getElementById("myCanvas");
-    let ctx = c.getContext("2d");
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
     if(error_no === 1 ){
            //header
         ctx.beginPath();
@@ -195,18 +195,22 @@ class App extends React.Component {
       // prepei na tou di3w mnm oti kerdise
       this.setState({nextWord:1})
     }
+
    }
 
 
    checkNextWord=()=>{
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
     this.onCalculateWord();
-    this.setState({nextWord:0})
+    this.setState({nextWord:0,wins:0,errors:0})
     var lettersDiv = document.getElementsByClassName('letter');
     for (let i =0; i<lettersDiv.length; i++){
      document.getElementById(lettersDiv[i].id).disabled = false;
      document.getElementById(lettersDiv[i].id).className = 'letter';
-
     }
+    ctx.clearRect(40, 2, c.width, c.height);
+    
    }
 
 
@@ -219,9 +223,6 @@ class App extends React.Component {
     this.setState({ showModal: false });
   };
 
-  onPressLetter = (e) => {
-console.log(e.tagret.value);
-  }
 
       render(){
        
@@ -244,9 +245,8 @@ console.log(e.tagret.value);
              score = {this.state.score}
              nextWord = {this.state.nextWord}
              checkNextWord = {this.checkNextWord}
-             onPressLetter ={this.onPressLetter}
+           
             
-           //  onCheckLetter={this.onCheckLetter}
              />}
            <Modal
             content = 'lalala'
