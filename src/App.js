@@ -30,7 +30,7 @@ class App extends React.Component {
 //allagh selidas
    onChangePage = (page) =>{
       this.setState({page:page})
-      
+
     }
 // allagh katigorias    
     onClickCategory = (e)=>{
@@ -38,8 +38,6 @@ class App extends React.Component {
    }
 // kata thn epilogh to grammatos
    onClickLetter = (e) =>{
-  
-    this.setState({letter:e.target.value});
     this.onCheckLetter(e.target.value);
    }
 // resetPaixnidiou
@@ -154,47 +152,7 @@ class App extends React.Component {
 
    onCheckLetter=(letter)=>{
  // new word
-    let newWord = this.state.word.map(l=> {
-     
-      if (l.value === letter){
-        return {...l,active:true};
-      }else if (l.value !== letter){
-        return l;
-      }
-    });
-
-    let wins = this.state.wins + (this.state.word.filter(w => w.value == letter).length > 0 ? 1 : 0); //reduce
-
-    if (wins != this.state.wins){
-      document.getElementById(letter).disabled = true;
-      document.getElementById(letter).className += ' activeBtn';
-    }
-
-    let errors = this.state.errors + (this.state.word.filter(w=> w.value === letter).length === 0 ? 1 :0);
-    let score = this.state.score + (this.state.word.filter(w=> w.value === letter).length > 0 ? 10 : 0 );
-   
-    if (errors !== this.state.errors){
-      //draw 
-      this.onErrorAddBody(errors);
-       document.getElementById(letter).disabled = true;
-       document.getElementById(letter).className += ' inactiveBtn';
-    }
-
-    if(errors == 6){
-      //disable all button
-      var lettersDiv = document.getElementsByClassName('letter');
-       for (let i =0; i<lettersDiv.length; i++){
-        document.getElementById(lettersDiv[i].id).disabled = true;
-       }
-       //show modal
-    }
-
-    this.setState({...this.state,word:newWord,wins, errors,score});
-
-    if (newWord.filter(w=> w.active ).length === newWord.length ){
-      // prepei na tou di3w mnm oti kerdise
-      this.setState({nextWord:1})
-    }
+    this.setState(logic(this.state,letter))
 
    }
 
@@ -259,3 +217,51 @@ class App extends React.Component {
 }
 
 export default App;
+
+
+const logic = (iState,letter) =>{
+  let newWord = iState.word.map(l=> {
+     
+    if (l.value === letter){
+      return {...l,active:true};
+    }else if (l.value !== letter){
+      return l;
+    }
+  });
+
+  let wins = iState.wins + (iState.word.filter(w => w.value == letter).length > 0 ? 1 : 0); //reduce
+
+  if (wins != iState.wins){
+    document.getElementById(letter).disabled = true;
+    document.getElementById(letter).className += ' activeBtn';
+  }
+
+  let errors = iState.errors + (iState.word.filter(w=> w.value === letter).length === 0 ? 1 :0);
+  let score = iState.score + (iState.word.filter(w=> w.value === letter).length > 0 ? 10 : 0 );
+ 
+  if (errors !== iState.errors){
+    //draw 
+    this.onErrorAddBody(errors);
+     document.getElementById(letter).disabled = true;
+     document.getElementById(letter).className += ' inactiveBtn';
+  }
+
+  if(errors == 6){
+    //disable all button
+    var lettersDiv = document.getElementsByClassName('letter');
+     for (let i =0; i<lettersDiv.length; i++){
+      document.getElementById(lettersDiv[i].id).disabled = true;
+     }
+     //show modal
+  }
+  let newState = {...iState,word:newWord,wins, errors,score,letter}
+  //this.setState({...iState,word:newWord,wins, errors,score,letter});
+
+  if (newWord.filter(w=> w.active ).length === newWord.length ){
+    // prepei na tou di3w mnm oti kerdise
+    newState = {...newState, nextWord:1}
+    //this.setState({nextWord:1})
+  }
+  return newState;
+  //this.setState(newState);
+}
